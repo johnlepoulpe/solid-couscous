@@ -1,0 +1,137 @@
+\section*{Problèmes NP-Complets}
+
+\subsection*{Quelques définitions}
+\begin{description}
+\item[Problème] un problème est un langage $\mathcal{L}$ (décrit dans
+  la rubrique \textsc{Entrée}), partitioné en deux sous-ensembles (la
+  partition est décrite dans la rubrique \textsc{Sortie}, l'un des
+  deux sous-ensembles correspond au ``oui'', l'autre au ``non'').
+\item[Instance] une instance d'un problème est un élément du langage.
+\item[Problème décidé par un machine de Turing] problème pour lequel il
+  existe une machine de Turing renvoyant la bonne réponse en un temps
+  fini pour toutes les instances.
+\item[Problème accepté par un machine de Turing] problème pour lequel
+  il existe une machine de Turing renvoyant oui en un temps fini pour
+  les instances positives.
+\item[P] est la classe des langages décidés par une machine
+  de Turing déterministe en temps polynomial.
+\item[NP] est la classe des langages accéptés par une machine
+  de Turing non-déterministe en temps polynomial. Informellement: il
+  est possible de vérifier en temps polynomial si une solution est
+  valide.
+\item[Réduction polynomiale] de $L_{1}$ vers $L_{2}$ est une fonction
+  $f$, calculable en temps polynomial, telle que pour toute instance
+  $w$ de
+  $L_{1}$, $w \in L_{1} \equiv f(w) \in L_{2}$.\\
+  On note alors $L_{1} \propto L_{2}$. Informellement, si l'on sait
+  résoudre $L_{2}$ en temps polynomial, on sait alors résoudre $L_{1}$
+  en temps polynomial, $L_{2}$ est donc au moins aussi dur que
+  $L_{1}$.
+\item[NP-difficile] un langage $L$ est NP-difficile si tout problème de NP
+  se réduit à $L$.
+\item[NP-complet] un langage est NP-complet si il est NP-difficile et
+  lui-même dans la classe NP.
+\end{description}
+
+\subsection*{SAT}
+\begin{itemize}
+\item Problème SAT général: \\
+  \textsc{Entrée}: $\phi$ une formule logique. \\
+  \textsc{Sortie}: Oui si et seulement si il existe une valuation $\nu$
+  telle que $\nu \models \phi$.\\
+\item 3-SAT:\\
+  \textsc{Entrée}: $\phi$ une formule logique sous forme 3-CNF. \\
+  \textsc{Sortie}: Oui si et seulement si il existe une valuation $\nu$
+  telle que $\nu \models \phi$.\\
+\item NAESAT: \\
+  \textsc{Entrée}: $\phi$ une formule logique sous forme CNF. \\
+  \textsc{Sortie}: Oui si et seulement si il existe une valuation
+  $\nu$ telle que chaque clauses contiennent au moins un littéral vrai
+  et un littéral faux.\\
+\item MAX-2-SAT: \\
+  \textsc{Entrée}: $\phi$ une formule logique sous forme 2-CNF, $k \in
+  \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe une valuation $\nu$
+  rendant $k$ clauses de $\phi$ vraies.\\
+\end{itemize}
+
+
+\subsection*{INDEP-SET}
+\begin{itemize}
+\item INDEP-SET: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe non orienté, $k\in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe $S \subseteq V$ de
+  taille $k$ tel que $\forall (u,v) \in S^{2}, (u,v) \notin E$.\\
+\item CLIQUE: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe non orienté, $k\in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe une clique de taille
+  $k$.\\
+\end{itemize}
+
+\subsection*{VERTEX-COVER}
+\begin{itemize}
+\item VERTEX-COVER: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe non orienté, $k\in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe $V' \subseteq V$ de
+  taille $k$ tel que pour toute arête $(u,v) \in E$, $u \in V '$ ou $v \in
+  V'$.\\
+\item EXACT-COVER: \\
+  \textsc{Entrée}: $X$ un ensemble quelconque, $\mathcal{F} \subset
+  \mathcal{P}(X)$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe
+  $\mathcal{S} \subseteq \mathcal{F}$ de taille k, tel que pour tout
+  $x \in X$, il existe un unique $S \in \mathcal{S}$ tel que $x \in S$. \\
+\item SUBSET-SUM: \\
+  \textsc{Entrée}: $(a_{i})_{1 \leq i \leq n}$ un ensemble fini
+  d'entiers, $k \in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe
+  $I \subset \llbracket 1;n \rrbracket$ tel que
+  $\sum_{i \in I} a_{i} = k$. \\
+\item PARTITION: \\
+  \textsc{Entrée}: $(a_{i})_{1 \leq i \leq n}$ un ensemble fini d'entiers. \\
+  \textsc{Sortie}: Oui si et seulement si il existe
+  $I \subset \llbracket 1;n \rrbracket$ tel que
+  $\sum_{i \in I} a_{i} = \sum_{i\notin I} a_{i}$. \\
+\item 0-CYCLE: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe pondéré. \\
+  \textsc{Sortie}: Oui si et seulement si il existe un cycle $C$ de
+  poids nul. \\
+\item BIN-PACKING: \\
+  \textsc{Entrée}: $(a_{i})_{1 \leq i \leq n}$ un ensemble fini
+  d'entiers (taille des objets), une infinité de boîtes de taille $C \in
+  \mathbb{N}$, $k \in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il est possible de ranger
+  l'intégralité des objets dans moins de $k$ boîtes.\\
+\item KNAPSACK: \\
+  \textsc{Entrée}: un ensemble fini d'objets, de poids
+  $(w_{i})_{1 \leq i \leq n}$ et de valeur $(v_{i})_{1 \leq i \leq
+    n}$, deux entiers $W$ et $V$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe
+  $(x_{i})_{1 \leq i \leq n} \in \{0, 1\}^{n}$
+  tel que $\sum_{i = 1}^{n} x_{i}w_{i} \leq W$ et $\sum_{i
+    = 1}^{n} x_{i}v_{i} \geq V$.\\
+\end{itemize}
+
+\subsection*{Circuits et chemins}
+\begin{itemize}
+\item HAMILTONIAN-PATH:
+  \textsc{Entrée}: $G = (V, E)$ un graphe. \\
+  \textsc{Sortie}: Oui si et seulement si $G$ admet un cycle hamiltonien.\\
+\item TSP: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe, $k\in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe un cycle
+  hamiltonien de poids inférieur à $k$.\\
+
+\end{itemize}
+
+\subsection*{Quelques autres}
+\begin{itemize}
+\item CHROMATIC-NUMBER: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe non orienté, $k\in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe $k$-coloration de $G$.\\
+
+\item MAX-CUT: \\
+  \textsc{Entrée}: $G = (V, E)$ un graphe non orienté pondéré, $k\in \mathbb{N}$. \\
+  \textsc{Sortie}: Oui si et seulement si il existe une coupe
+  $C \subset V$ de poids $w(C, \complement_{V}C) \geq k$.\\
+\end{itemize}

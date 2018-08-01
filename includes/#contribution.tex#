@@ -1,0 +1,78 @@
+\section{Contribution}
+
+We assume that the reader is familiar with the complexity theory. In
+this article, we will denote the set of instances by $\Omega$ and the
+set of positive instances by $S$. See the appendix for further
+reminder on the compexity theory.
+
+\subsection{Proof of the belonging to the NP class}
+
+We aim to prove that the NST decision problem is NP-complete. It
+clearly belongs to the NP class. Indeed, for all tree $T = (V,E)$, for
+all integer $k$, given a potential solution $S$, it is possible to
+ascertain whether or not $S$ is self-nested, and to compute the
+distance between $S$ and $T$ also in polynomial time.
+
+\subsection{Intuition guiding the researches}
+To help us build the reduction, a few conceptual remarks can be made,
+in order to guide the research. First of all, the reduction has no
+obligation to be surjective, as a matter of fact, it is quite often
+not surjective. The image of the reduction has to be small enough to know the
+general form of the solution of each instance in order to be able to
+prove the equivalence
+$\omega_{A} \in S_{A} \Leftrightarrow \omega_{b} = f(\omega_{a}) \in S_{B}$ (where
+$A$ is the initial NP-complete problem and $B$ is the problem we
+consider). Yet, if the image of $\Omega_{A}$ by the reduction has to
+be big enough so that we are enable to find a polynomial algorithm
+solving the problem on the set of images of the reduction. Indeed,
+finding such an algorithm and a reduction would mean we would have
+solved the open question of the equality of the P and NP classes,
+which is unreasonable.
+
+Furthermore, we can observe that generally, the construction of the
+image instance seems to be combination of two different things: a part
+that reflects only the number of variables in the instance of the
+first problem and a part reflecting the links and constraints that
+they have with one another.  For example, in the proof of the
+reduction from 3-SAT to INDEP-SET \cite{polytech}, the first part
+consists in the triangles corresponding to each clause of the initial
+instance, and the second to the edges linking the nodes such as one is
+labeled with the negation of the other. In the proof of the reduction
+from VERTEX-COVER to HAMILTONIAN-CYCLE \cite{polytech}, the first part
+consists in the 12 nodes widgets corresponding to each edge of the
+initial graph, and the second part consists in the way they are linked
+to one another to form the image graph.
+
+We can also observe that in the first part, a piece of the image
+instance corresponds to each variable of the initial
+instance. Moreover, this piece of the image instance is very
+restrictive and can be used in a solution only in a few (2 or 3 most
+of the time) different ways. For example in the proof of the reduction
+from VERTEX-COVER to HAMILTONIAN-CYCLE \cite{polytech}, the widgets
+can either be visited in one pass or in two.
+
+Furthermore the way these pieces are used is completely independant
+until the second part corresponding to the constraints between the
+variables is added.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent\hrulefill
+
+\subsection{Trees of height 2 without variation of the height}
+The edit distance with constraint of K.Zhang being slightly difficult
+to manipulate, we will use a far more restrictive variant in this
+section: only leaves (and not internal nodes) can be added or
+deleted. More precisely, if $u$ is an ancestor of $v$ in $T$ and
+$v \in V'_{1}$ then $u \in V'_{1}$.
+
+In this section we present a polynomial algorithm computing the
+nearest self-nested tree of height 2 to a tree of height 2.
+
+\subsection{Trees of height 2 with variation of the height}
+In this section, we present a polynomial algorithm computing the nearest
+self-nested tree to a tree of height 2.
+
+\subsection{Family of bricks}
+In this section, we present a family of trees that could be used as
+the first part of the reduction to represent the variables of the
+initial instance.

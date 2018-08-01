@@ -1,0 +1,26 @@
+\begin{thebibliography}{1}
+
+\bibitem{godin}
+C.~Godin and P.~Ferraro, ``Quantifying the degree of self-nestedness of trees:
+  Application to the structural analysis of plants,'' 2010.
+
+\bibitem{meristems}
+P.~de~Reffye, C.Edelin, J.~Françon, M.Jaeger, and C.~Puech, ``Plant models
+  faithful to botanical structure and development,'' 1988.
+
+\bibitem{zhang}
+K.~Zhang, ``A constrained edit distance between unordered labeled trees,''
+  1996.
+
+\bibitem{NPCzhang}
+K.~Zhang, R.~Statman, and D.Shasha, ``On the editing distance between unorderd
+  labeled trees,'' 1992.
+
+\bibitem{romain}
+R.~Azais, ``Nearest embedded and embedding self-nested trees,'' 2017.
+
+\bibitem{polytech}
+O.~Bournez, ``Quelques problèmes np-complets.''
+  \url{http://www.enseignement.polytechnique.fr/informatique/INF423/uploads/Main/chap12-good.pdf}.
+
+\end{thebibliography}

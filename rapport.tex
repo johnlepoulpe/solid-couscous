@@ -1,0 +1,157 @@
+\documentclass[a4paper,11pt]{article}%
+
+\usepackage{fullpage}%
+\usepackage[T1]{fontenc}%
+\usepackage[utf8]{inputenc}%
+\usepackage[main=english,francais]{babel}% % Adjust the main language
+
+\usepackage{authblk}
+
+\usepackage{amsfonts,amsmath,amssymb}%
+\usepackage{amsthm}%
+
+\usepackage{graphicx}%
+\usepackage{subcaption}%
+\usepackage{url}%
+\usepackage{abstract}%
+
+\usepackage{amsmath}%
+\usepackage{subfig}%
+\usepackage{color}
+
+\usepackage{newpxtext, newpxmath}
+
+\usepackage{mathpazo}%
+
+\usepackage{array}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{forest}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{calc}
+
+% Configuration of the theorem style %
+
+\newtheorem{thm}{Theorem}[section]%
+\newtheorem{cor}[thm]{Corollary}%
+\newtheorem{lem}[thm]{Lemma}%
+
+\theoremstyle{prop}%
+\newtheorem{prop}[thm]{Proposition}%
+
+\theoremstyle{defin}%
+\newtheorem{defin}[thm]{Definition}%
+
+\theoremstyle{rem}%
+\newtheorem*{rem}{Remark}%
+
+\theoremstyle{example}%
+\newtheorem*{example}{Example}%
+
+\renewcommand\qedsymbol{$\blacksquare$}%
+
+\newsubfloat{figure} % Subfigures
+
+
+% \usepackage{listings}%
+
+% \lstset{%
+%   basicstyle=\sffamily,%
+%   columns=fullflexible,%
+%   language=C++,%       % Adjust according to your current language
+%   frame=lb,%
+%   frameround=fftf,%
+% }%
+
+\parskip=0.5\baselineskip
+
+\sloppy
+
+\begin{document}
+
+\title{Potential NP-completeness of an approximate tree compression problem}
+
+\author{Clément Legrand-Duchesne}
+
+\affil{Univ Rennes, F-35000 Rennes, France}
+
+\maketitle
+
+\begin{abstract}
+  A tree is said to be self-nested if all his subtrees of equal height
+  are isomorphic. It has been shown that self-nested trees are a
+  natural and relevant model for the structure of a plant. We are
+  interested in approximating trees by self-nested trees. More
+  precisely, given a tree $T$, we try to find the self-nested tree $S$
+  that minimizes the edit distance between $S$ and $T$. In this paper,
+  we present our attempts to prove that this problem is NP-complete,
+  as well as polynomial algorithms when $T$ is of height 2.
+
+  
+  This internship has been carried out from May 28, 2018 to July 27,
+  2018, in the MOSAIC team (MOrphogenesis Simulation and Analysis In
+  siliCo) of the RDP laboratory (\emph{Reproduction et
+    Développement des Plantes}) of the ENS de Lyon, under the
+  supervision of Christophe Godin.
+
+  \begin{description}
+  \item[Keywords:] Graph Theory, NP-completeness, self-nested trees,
+    edit distance, tree compression.
+  \end{description}
+\end{abstract}
+
+\pagenumbering{gobble}
+
+\tableofcontents 
+\clearpage
+
+\pagenumbering{arabic} % Start arabic numbering
+
+\input{includes/introduction.tex}
+\input{includes/context.tex}
+\input{includes/contribution.tex}
+\input{includes/validation.tex}
+\input{includes/conclusion.tex}
+
+%\input{includes/sujet.tex}
+
+% \clearpage
+
+% \section*{Problème de décison associé}
+
+% Il est plus facile de travailler sur le problème de décision
+% naturellement associé. \\
+% \textsc{Entrée}: $T = (V,E) \in \mathcal{T}$, $k \in \mathbb{N}$ \\
+% \textsc{Sortie}: Oui si et seulement si il existe $S \in
+% \mathcal{S}$ auto-emboîté tel que $D(T,S) \leq k$.\\
+% On notera que les deux problèmes sont de difficultés équivalentes: il
+% est possible de trouver la solution du problème d'optimisation à
+% partir du problème de décision en temps polynomial. Il suffit pour
+% cela de résolvoudre ce dernier de multiples fois en réalisant une
+% dichotomie sur $k$.
+
+% \input{includes/catalogue.tex}
+
+% \clearpage
+
+% \input{includes/NP_proof.tex}
+
+% \input{includes/lemmas.tex}
+
+\clearpage
+
+\pagenumbering{gobble}
+\input{includes/appendix.tex}
+\clearpage
+\input{includes/acknowledgments.tex}
+\nocite{*}
+\bibliographystyle{ieeetr}
+\bibliography{biblio}
+
+
+\end{document}

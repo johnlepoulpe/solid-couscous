@@ -1,0 +1,47 @@
+\section*{Introduction}
+\addcontentsline{toc}{section}{\protect\numberline{}Introduction}%
+
+The MOSAIC team develops mathematical models and tools to study the
+morphogenesis and growth of animals and plants. Thus, they design
+mathematical models and data structures able to describe efficiently
+and accurately the shapes and properties of the plants or animals.
+
+For example, it is natural to represent the structure and
+ramifications of a plant by a tree. Furthermore, we can observe some
+ramifications patterns tend to repeat themselves in many places of the
+plants. The MOSAIC team has thus designed a theoretical model of the
+structure of a plant based on this idea of repeated patterns:
+self-nested trees, trees in which all the subtrees of equal height are
+isomorphic.
+
+Depending on the species, the size of these trees can be tremendous
+and lead to unreasonable computing time. They also developed a
+compression algorithm for trees, based on the same idea of patterns
+within the tree, by eliminating this redundancy. Moreover, by
+eliminating this redundancy, the global behavior of the tree is
+highlighted. Thus, this compression helps to understand the structure
+of the plant and its developement. 
+
+Those compression algorithms return DAGs (Directed Acyclic Graph) and
+it is possible to show that the tree having the best compression
+factor are the self-nested ones. Therefore, it is interessant to
+approximate trees by self-nested ones, in order to have an approximate
+yet compact representation of them. There are several ways to do this
+and the MOSAIC team has developed different algorithms doing
+this. However, the approximation given by those algorithms are not the
+best (either because these algorithms are heuristics or because some
+additional conditions are imposed on the self nested trees returned by
+the algorithm). In fact no efficient algorithm has been found to
+compute the nearest self-nested tree to a tree. 
+
+Therefore the goal of this internship is to prove that this problem is
+NP-complete. Under the assumption that the P and NP complexity classes are
+different, this would prove there exists no polynomial algorithm able
+to find the nearest self-nested tree to a tree in general, and thereby
+legitimate the algorithms previously developed by the team.
+
+The state of the art, along with definitions and notations will be
+presented and introduced in a first section. We will then give further
+details on the NP-complete theory and present the results found during
+the intership. Finally, we will explain how this results consist in a
+improvement of the state of the art and the consequences and applications.
