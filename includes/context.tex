@@ -222,18 +222,21 @@ minimal cost of an edit sequence leading from $T_{1}$ to $T_{2}$
 
 In \cite{NPCzhang} K. Zhang, R. Statman and D. Shahsha show that the
 problem of computing the edit distance between two trees is
-NP-complete. Consequently, it is convenient to add constraints to the
-edit mapping to build a new edit distance easier to compute.
+NP-complete. There are several ways to overcome this difficulty: one
+of them consists in restricting the set of instances to consider a set
+of trees in which the distance is easier to compute. Another one consists
+in modifying slightly the distance, for example by adding other
+constraints, in order to build a new edit distance easier to compute.
 
-The article \cite{zhang} presents a sufficient and not very
-constraining condition on the edit mapping along with a polynomial
-algorithm to compute the new distance. The condition on the edit
-mapping is the following: for all $u,v,w \in V'_{1}$, the
-least common ancester of $u$ and $v$ is a proper ancester of $w$ if
-and only if the least common ancestor of $\Phi(u)$ and $\Phi(v)$ is a
-proper ancestor of $\Phi(w)$. In other words, $\Phi$ preserves the
-sibling relation among the nodes: a node can be deleted only if all
-his descendant are deleted as well or if all his siblings have been
+The article \cite{zhang} presents an additional, sufficient and not
+very constraining condition on the edit mapping along with a
+polynomial algorithm to compute the new distance. The condition on the
+edit mapping is the following: for all $u,v,w \in V'_{1}$, the least
+common ancester of $u$ and $v$ is a proper ancester of $w$ if and only
+if the least common ancestor of $\Phi(u)$ and $\Phi(v)$ is a proper
+ancestor of $\Phi(w)$. In other words, $\Phi$ preserves the sibling
+relation among the nodes: a node can be deleted only if all his
+descendant are deleted as well or if all his siblings have been
 deleted; during the addition of a new node $u$ under $v$, all the
 children of $v$ have to become children of $v$ or none of them.
 
@@ -249,7 +252,7 @@ find the theorical growth model of each species and thereby lead to a
 better understanding of the evolution of the meristems.
 
 If the goal is to compute the value taken by a recursive function $f$
-on a tree $T$, approximating $T$ by a self-nested tree $S$ allow us to
+on a tree $T$, approximating $T$ by a self-nested tree $S$ allows us to
 compute very effectively $f(S)$, which can, under certain conditions,
 be an approximative value of $f(T)$. 
 
@@ -319,5 +322,6 @@ distance 2 from its NST.
 No polynomial algorithm able to compute the NST of a tree has been
 found yet. Thus, the goal of the internship is to prove that there
 exists no such algorithm (more precisely that the NST problem is
-NP-complete). This result would legitimate the use of the NeST and
-NEST algorithms and of heuristics.
+NP-complete). This result would justify the use of approximation
+algorithms such as the heuristic and the algorithm computing the NeST
+and the NEST.

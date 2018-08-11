@@ -1,11 +1,18 @@
+\newcommand\variable{\emph{variable}\xspace}
+\newcommand\variables{\emph{variables}\xspace}
+\newcommand\widget{\emph{widget}\xspace}
+\newcommand\widgets{\emph{widgets}\xspace}
+\newcommand\constraint{\emph{constraint}\xspace}
+\newcommand\constraints{\emph{constraints}\xspace}
+
 \section{Contribution}
 
 We assume that the reader is familiar with the complexity theory. In
 this article, we will denote the set of instances by $\Omega$ and the
-set of positive instances by $S$. See the appendix for further
-reminder on the compexity theory.
+set of positive instances by $Y$. See the appendix for further
+reminder on the complexity theory.
 
-\subsection{Proof of the belonging to the NP class}
+\subsection{Belonging to the NP class}
 
 We aim to prove that the NST decision problem is NP-complete. It
 clearly belongs to the NP class. Indeed, for all tree $T = (V,E)$, for
@@ -13,21 +20,395 @@ all integer $k$, given a potential solution $S$, it is possible to
 ascertain whether or not $S$ is self-nested, and to compute the
 distance between $S$ and $T$ also in polynomial time.
 
-\subsection{Intuition guiding the researches}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent\hrulefill
+
+\subsection{First approach}
 To help us build the reduction, a few conceptual remarks can be made,
 in order to guide the research. First of all, the reduction has no
-obligation to be surjective, as a matter of fact, it is quite often
+obligation to be surjective; as a matter of fact, it is quite often
 not surjective. The image of the reduction has to be small enough to know the
 general form of the solution of each instance in order to be able to
 prove the equivalence
-$\omega_{A} \in S_{A} \Leftrightarrow \omega_{b} = f(\omega_{a}) \in S_{B}$ (where
+$\omega_{A} \in Y_{A} \Leftrightarrow \omega_{b} = f(\omega_{a}) \in Y_{B}$ (where
 $A$ is the initial NP-complete problem and $B$ is the problem we
 consider). Yet, if the image of $\Omega_{A}$ by the reduction has to
-be big enough so that we are enable to find a polynomial algorithm
+be big enough so that we are unable to find a polynomial algorithm
 solving the problem on the set of images of the reduction. Indeed,
 finding such an algorithm and a reduction would mean we would have
 solved the open question of the equality of the P and NP classes,
 which is unreasonable.
+
+In order to understand better the difficulty of the problem, I tried
+to find a way to compute efficiently the NST in special cases. Indeed,
+as long as we find a polynomial algorithm solving the NST problem on
+the set of trees considered, we are ensured that the difficulty
+leading to the NP-hardness lies somewhere else.
+
+I first considered the trees of height 2. In the NEST and NeST
+algorithms, C. Godin, P. Ferraro and R. Azais consider only edit
+operations such as the height of any pre-existing node is unchanged
+(see Figure \ref{fig:edit_height}). I decided to first use these edit
+operations.
+\begin{figure}
+  \centering
+  
+  \caption{edit operation height conservation}
+  \label{fig:edit_height}
+\end{figure}
+
+\subsubsection{Trees of height 2 with same height} 
+Let $T$ be a tree of height 2 (see Figure \ref{fig:height2}). We can
+first notice that if there are any leaves of depth 1, they do not
+require any edit operations to obtain $NST(T)$. We can for this reason
+assume that every node of depth 1 is of height 1.
+
+\begin{figure}
+  \centering
+  
+  \caption{example of tree of height 2}
+  \label{fig:height2}
+\end{figure}
+
+Let us denote $NST(T)$ by $S$ and an optimal edit mapping between $T$
+and $S$ by $\Phi$. We will show in this section that it is possible to
+find Phi in polynomial time.
+
+Let us denote the nodes of height 1 of $T$ by
+$(u_{i})_{1 \leqslant i \leqslant N}$ and
+$(n_{i})_{1 \leqslant i \leqslant N}$ their number of children. We
+will suppose that the sequence $(n_{i})_{1 \leqslant i \leqslant N}$ is
+sorted by ascending order. Each $u_{i}$ can be either
+deleted or mapped on a node of height 1 of $S$, and since $S$ is
+self-nested all the nodes of height 1 in $S$ are isomorphic to one
+another. The complete subtree under the each node of height 1 of $S$
+is characterized by its number of leaves. As a result, the edit
+mapping leading from $T$ to $S$ is characterized by the $I_{0}$ the
+set of index of the nodes deleted and by $\tilde{n}$ the number of
+leaves under a node of height 1 in $S$. Thus, we will try to find
+$I_{0}$ and $\tilde{n}$ such as the corresponding self nested tree is
+a minimal distance from $T$.
+
+To delete $u_{i}$, in order to respect the constraint of Zhang, we
+have to delete first all of his children execept one. Therefore,
+deleting $u_{i}$ costs $n_{i}$ where $n_{i}$ is the number of children
+of $u_{i}$.
+
+If $u_{i}$ is not deleted, than we have to adjust the number of
+children it has to $\tilde{n}$, which costs
+$\left|n_{i} - \tilde{n}\right|$. As a result, $u_{i}$ has to be
+deleted if and only if $n_{i}$ is closer to 0 than to
+$\tilde{n}$. Figure \ref{fig:optimalcost} shows $f_{i}$ the minimum
+cost for each $u_{î}$ in function of $\tilde{n}$.
+
+\begin{figure}
+  \centering
+  \caption{optimal cost for $u_{i}$ in function of $\tilde{n}$}
+  \label{fig:optimalcost}
+\end{figure}
+
+By summing the functions on every $u_{i}$, we obtain $f$ the minimal cost
+of a mapping leading from $T$ to a self nested tree of height 2, with
+$N$ nodes of depth 1, in function of $\tilde{n}$ the number of
+children of the nodes of height 1. We can observe that the resulting
+function is a piecewise linear function and every differentiable break
+has for abscissa one of the $n_{i}$ or $2*n_{i}$. Therefore, the
+minimum of this function is reached in one of those points. Since
+$f_{i}$ is increasing before $2*n_{i}$ and constant after and that the
+derivative of the other $f_{j}$ are equal before and after $2*n_{i}$,
+$2*n_{i}$ cannot be a minimum of $f$.
+
+Thus, by evaluating $f$ on every $n_{i}$, it is possible to find the
+minimum of $f$ and thereby find the NST of $T$.
+
+\begin{remark}
+  We will denote by
+  ${I_{0} = \{i \in \llbracket 1;N \rrbracket \ | \ u_{i} \text{ is
+      deleted} \}}$ and ${I_{1} = \{i \in \llbracket 1;N \rrbracket \
+    | \ 
+    \Phi(u_{i}) \text{ is of height } 1 \}}$.\\
+  For every $i \in I_{0}$, for every $j \in I_{1}$, $n_{i} < n_{j}$
+
+proof in appendix
+
+\end{remark}
+
+\begin{remark}
+$\tilde{n}$ est une des médianes des $(n_{i})_{i \in I_{1}}$
+-> explication + preuve en annexe
+\end{remark}
+
+probleme: c'est polynomial -> pas assez compliqué!
+Sans la contrainte de hauteur ?
+
+\subsubsection{Trees of height 2 without the heigth constraint}
+We will use the same notations as in the preceding paragraph. We will
+denote by $I_{k}$ the set ${\{i \in \llbracket 1;N \rrbracket \ | \ 
+\Phi(u_{i}) \text{ is of height } k \}}$. 
+
+Intuition:\\
+Idée 1: Plusieurs types de noeud: ceux ou on supprime les fils, ceux
+qui augmente de hauteur jusqu'a $k$.
+
+Idée 2: L'arbre auto-emboité à minimal n'est défini que par les
+$I_{k}$ et les $\tilde{n}^{k}$.
+
+Idée 3:
+Formule du coup de la distance à l'arbre + explication. 
+Moins un noeud de profondeur 1 a de fils, plus il est
+interessant de les supprimer au lieu de l'égaliser aves les autres.\\
+
+Lemmes: On prouve que les $\tilde{n}^k$ croissent de manière
+exponentielle. On reparque que les $|I_{k}|$ décroissent de manière exponentielle.\\ 
+
+Let us denote by $\tilde{n}^{k}$ the number of children of the nodes
+of height $k$ in $S$. We can use the same remark as the one made in the
+previous paragraph and show that the $\{n_{i} | i \in I_{k} \}$ are
+disjoint and that if $k < l$  
+
+résulat de complexite plus dénombrement
+%inserer image
+
+\subsection{deuxieme approche}
+We can see some general patterns in many differents proofs of
+NP-completeness. In this section we will present the idea of \widgets
+and of \constraints, through two different reductions.
+
+Let us begin with the proof of the reduction from 3-SAT to INDEP-SET
+\cite{polytech}. As a brief reminder:
+
+\begin{definition}[3-SAT]
+\textsc{Input:} $\Phi$ a formula in conjonctive normal form where each
+clause is composed of three litterals. \\
+\textsc{Output:} Yes if and only if there exists an interpretation
+that satifies $\Phi$.\\
+\end{definition}
+
+\begin{definition}[INDEP-SET] 
+\textsc{Input:} $G=(V,E)$ an undirected graph and $k$ an integer.\\
+\textsc{Output:} Yes if and only if there exists a set of vertices
+$V' \subset V$ of size $k$ such that for every pair of vertices
+$(u,v)$ of $V'$, $(u,v) \notin E$.\\
+\end{definition}
+
+\begin{figure}
+  \centering
+  
+  \caption{reduction 3-SAT to INDEP-SET}
+  \label{fig:indep-set}
+\end{figure}
+
+In the reduction proposed by Garey and Johnson \cite{garey}, the image
+instance of INDEP-SET is built in two steps: the first one consists in
+defining triangles that correspond to each clause of the initial
+instance of 3-SAT (see Figure \ref{fig:3sat}); the second one consists
+in adding edges that link the nodes of the \widgets that are labeled
+with the negation of the same variable of 3-SAT. One way of
+interpreting this division in two steps is to consider the triangle
+\widgets as \variables that can take three different values (the
+\variable term here should not be confused with the variable of the
+3-SAT problem) and to consider the edges linking the \widgets as
+\constraints.
+
+These three different possible values are the labels of the three
+nodes of the triangle. The value taken is the label of the node that
+belongs to the set of vertices of $V'$ the INDEP-SET problem. For
+example, Figure \ref{fig:indep-set}, the first widget can take the
+values $x$, $y$ or $z$.
+
+The edges linking two \widgets $A$ and $B$ forbid the two coresponding
+\variables to take simultaneously some given values. Indeed, we can
+see Figure \ref{fig:indep-set} that the edge $(x, \neg x)$ between the
+first and the second \widgets forbids the first \widget to take the
+value $x$ if the second takes the value $\neg x$ at the same time.
+
+We will now consider the reduction from VERTEX-COVER to
+HAMILTONIAN-PATH proposed by Cormen, Leiserson, Rivest and Stein
+\cite{cormen}. As a reminder:
+
+\begin{definition}[VERTEX-COVER]
+  \textsc{Input:} $G=(V,E)$ a undirected graph and $k$ an integer. \\
+  \textsc{Output:} Yes if and only if there exists set ofvertices $V'
+  \subset V$ of size $k$ such that for every edge $(u,v) \in E$, $u
+  \in V'$ or $v \in V'$.\\
+\end{definition}
+
+\begin{definition}[HAMILTONIAN-CYCLE] 
+  \textsc{Input:} $G=(V,E)$ an undirected graph.\\
+  \textsc{Output:} Yes if and only if $G$ is hamiltonian, in other
+  words, if there exists a cycle on $G$ visiting every vertex one and
+  only one time.\\
+\end{definition}
+
+\begin{figure}
+  \centering
+  
+  \caption{reduction 3-SAT to INDEP-SET}
+  \label{fig:indep-set}
+\end{figure}
+
+In this reduction, the image instance is also built in two steps: the
+first one consist in defining small pieces of graph composed of twelve
+nodes (Figure \ref{fig:hamilton}), and the second one consists in
+linking this pieces together through additionnal edges and
+vertices. 
+
+Once again, the small \widgets of the first part can be interpreted as
+variables. Indeed, there are two and only two ways of visiting one
+\widget during the traversal of the complete graph: in one time or two
+times. For this reason, the \widget can be seen as a \variable that
+can take two values, one or two.
+
+The edges and vertices added to connect the \widgets together can
+likewise be seen as \constraints.
+
+\begin{figure}
+  \centering
+  
+  \caption{Hamiltonian widget}
+  \label{fig:hamilton}
+\end{figure}
+
+In both cases, several remarks can be made: first of all, without the
+\constraints, the \widgets are totally independant: the value taken by
+one of them has no influence on any of the values taken by the
+others. Secondly, the \constraints highly reflects the shape of
+the instance of the first problem. Finally, the \widget used in the
+reduction is specific to the second problem.
+
+I choose to start the reduction from the INDEP-SET problem because
+of its simplicity and of the clarity of its \constraints and
+\variables. Indeed, each vertex of the graph can be considered as
+a binary \variable taking the value 1 if the vertex belongs to $V'$
+and 0 otherwise. There are to types of \constraints, the first one is
+that only $k$ variables can take the value 1, the second one is that
+if there is an edge between thes vertices $x$ and $y$, the
+corresponding \variables cannot take both the value 1.
+
+I decided to find pieces of trees that could be easily combined
+together and that could be the \widgets of the reduction we are trying
+to find. These \widgets have to be used in only two possible ways, in
+order to act as \variables. In our case, this means that there are two
+and only two different self-nested trees at equal and minimal distance
+from the \widget. Furthemore, they have to be easily combined and in a
+way that the choice of use of each \widget is indepedent from the way
+we use the others.
+
+In order to be independant, the \widgets have to be placed at
+different heights: indeed, if two \widgets are at the same height,
+their variations will be the same to obtain the nearest self-nested
+tree so they couldn't represent different \variables. A solution to
+this problem is to search widgets through their DAG compression and to
+pile them up. A second advantage of this method is that, the size of
+the corresponding tree grows exponentionally, whereas the size of the
+DAG grows linearly with the number of \widgets, so if we rephrase the
+NST problem to give in \textsc{Input} a DAG instead of a tree, the
+construction has still chances to be polynomial.
+
+A piece of DAG that respects this properties is shown Figure
+\ref{fig:widget}. The corresponding tree is at equal distance of the
+self nested trees Figures \ref{fig:NSTwidget1} and
+\ref{fig:NSTwidget2}, and their DAG compression is shown Figures
+\ref{fig:DAGwidget1} and \ref{fig:DAGwidget2}. These \widgets can be
+pilled up and used independently as shown Figure
+\ref{fig:empilement}. 
+
+We will denote the tree obtained by pilling up
+$n$ \widgets by $T_{n}$. It is possible to show that $T_{n}$ is
+equidistant from every tree having the DAG compression of Figure
+\ref{fig:NSTempilement} where every $A_{i}$ is either the DAG piece
+Figure \ref{fig:DAGwidget1} or Figure \ref{fig:DAGwidget2}. There
+exists no tree closer to $T_{n}$ than these ones. %reference en annexe
+
+%pleins de figures
+\begin{figure}
+  \centering
+  
+  \caption{Widget of the NST problem}
+  \label{fig:widget}
+\end{figure}
+
+To summarize, we now have a tree $T_{n}$ which has exactly $2^{n}$
+different NST and each one of this self nested trees corresponds to an
+assignment of $n$ variables in $\{0;1\}$. As explained before, this
+could correspond to the first step of a reduction of the NST
+problem. In order to complete the reduction, we have to add
+\constraints and to choose from which NP complete problem do the
+reduction. Once an NP-complete problem $P$ is chosen, adding \constraints
+means modifing $T_{n}$ in function of the instance of $P$, in
+order to obtain a tree $T$ closer to the NST corresponding to a
+valid assignment of \variables for the instance of $P$.
+
+
+
+
+L'idée est alors de modifier légerment $T_{n}$, en fonction de
+l'instance de départ afin de l'approcher davantage des arbres
+representant une solution valide, ainsi que de ceux dont moins de $n$
+variables ont été mis à une valeur positive. 
+\subsection{troisieme approche}
+On essaye cette fois d'obtenir les contraintes avant de savoir comment
+les agencer
+
+forme des contraintes, lien avec la partie précédente
+
+pas réussie a les assembler correctement et a en avoir plusieurs.
+
+\subsection{Intuition guiding the researches}
+
+\begin{itemize}
+\item Approche 1: se familariser avec le problème en se restraignant à
+  un sous-ensemble et montrer que déjà là c'est dur. Risque possible:
+  se restraindre à un sous-ensemble où en fait, c'est polynomial. Ça
+  permet quand même en général de mieux comprendre son problème.
+\item Approche 2: Preuve de NP-complétude à base de \widget,
+  i.e., de structures particulières que l'on peut combiner
+  astucieusement pour exprimer les \constraint du problème
+  auquel on cherche à se réduire.
+\item Approche 3: Trouver un graphe qui paraisse particulièrement
+  difficile.
+\end{itemize}
+
+In this section, I illustrate the second approach, where \widgets
+are built and linked to each others through \constraints. 
+
+Let us begin with the proof of the reduction from 3-SAT to INDEP-SET
+\cite{polytech}. As a brief reminder:
+\begin{definition}[3-SAT]
+  
+\end{definition}
+
+\begin{definition}[INDEP-SET]
+  
+\end{definition}
+\begin{figure}
+
+  \centering
+  
+  \caption{3SAT reduction}
+  \label{fig:3sat}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent\hrulefill
+
+In the reduction proposed by Garey and Johnson\cite{garey}, the image
+instance of INDEP-SET is built in two steps: the first one consists in
+defining triangles that correspond to each clause of the initial
+instance of 3-SAT (see Figure\ref{fig:3sat}); the second one consists
+in adding edges that link the nodes of the \widgets that are labeled
+with the negation of the same variable of 3-SAT. One way of
+interpreting this division in two steps is to consider the triangle
+\widgets as \variables that can take three different values (the
+\variable term here should not be confused with the variable of the
+3-SAT problem). 
+
+These three values are the label of three nodes of the
+triangle, and the value taken by the variable is the label of the node
+taken in the set of vertices of INDEP-SET.
+
+The edges linking the nodes are representing
+the constraints of the first problem
 
 Furthermore, we can observe that generally, the construction of the
 image instance seems to be combination of two different things: a part
