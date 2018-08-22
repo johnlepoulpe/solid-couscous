@@ -319,12 +319,12 @@ $V' \subset V$ of size $k$ such that for every pair of vertices
 $(u,v)$ of $V'$, $(u,v) \notin E$.\\
 \end{definition}
 
-\begin{figure}
-  \centering
+% \begin{figure}
+%   \centering
   
-  \caption{reduction 3-SAT to INDEP-SET}
-  \label{fig:indep-set}
-\end{figure}
+%   \caption{reduction 3-SAT to INDEP-SET}
+%   \label{fig:indep-set}
+% \end{figure}
 
 In the reduction proposed by Garey and Johnson \cite{garey}, the image
 instance of INDEP-SET is built in two steps: the first one consists in
@@ -398,7 +398,8 @@ likewise be seen as \constraints.
 
 \begin{figure}
   \centering
-  
+  \includegraphics[width=.5\textwidth]{figures/ham.pdf}
+
   \caption{Hamiltonian widget}
   \label{fig:hamilton}
 \end{figure}
@@ -454,7 +455,7 @@ transformed into Figure \ref{fig:DAGwidget2}.
 \begin{figure}
  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    % \includegraphics[width=.5\textwidth]{figures/dag2.pdf}
+    \includegraphics[width=.5\textwidth]{figures/treeAn.pdf}
     \caption{fig:widget}
     \label{fig:widget}
   \end{subfigure}
@@ -465,7 +466,7 @@ transformed into Figure \ref{fig:DAGwidget2}.
     \caption{fig:DAGwidget}
     \label{fig:DAGwidget}
   \end{subfigure} 
-  % \caption{Example of DAG compression}\label{fig:example}
+  \caption{The widget}%\label{fig:example}
 \end{figure}
 
 \begin{figure}
@@ -478,28 +479,28 @@ transformed into Figure \ref{fig:DAGwidget2}.
   \quad
   \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    \includegraphics[width=.3\textwidth]{figures/NST2An.pdf}
+    \includegraphics[width=.5\textwidth]{figures/NST2An.pdf}
     \caption{fig:NSTwidget2}
     \label{fig:NSTwidget2}
   \end{subfigure} 
-  % \caption{Example of DAG compression}\label{fig:example}
+  \caption{two possible changes}%\label{fig:example}
 \end{figure}
 
 \begin{figure}
  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    % \includegraphics[width=.5\textwidth]{figures/dag2.pdf}
+    \includegraphics[width=.5\textwidth]{figures/brick1NST.pdf}
     \caption{fig:DAGwidget1}
     \label{fig:DAGwidget1}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    % \includegraphics[width=.3\textwidth]{figures/dag.pdf}
+    \includegraphics[width=.5\textwidth]{figures/brick2NST.pdf}
     \caption{fig:DAGwidget1}
     \label{fig:DAGwidget2}
   \end{subfigure} 
-  % \caption{Example of DAG compression}\label{fig:example}
+  \caption{their DAG compression}%\label{fig:example}
 \end{figure}
 
 
@@ -516,18 +517,18 @@ exists no tree closer to $T_{n}$ than these ones. %reference en annexe
 \begin{figure}
  \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    % \includegraphics[width=.5\textwidth]{figures/dag2.pdf}
+    \includegraphics[width=.5\textwidth]{figures/dag_brick.pdf}
     \caption{fig:empilement}
     \label{fig:empilement}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{0.45\textwidth}
     \centering
-    % \includegraphics[width=.3\textwidth]{figures/dag.pdf}
+    \includegraphics[width=.5\textwidth]{figures/dagNST.pdf}
     \caption{fig:NSTempilement}
     \label{fig:NSTempilement}
   \end{subfigure} 
-  % \caption{Example of DAG compression}\label{fig:example}
+  \caption{pilling up the \widgets}\label{fig:example}
 \end{figure}
 
 To summarize, $T_{n}$ has exactly $2^{n}$ different NST and each one
