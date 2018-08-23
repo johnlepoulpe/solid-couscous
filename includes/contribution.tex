@@ -4,6 +4,12 @@
 \newcommand\widgets{\emph{widgets}\xspace}
 \newcommand\constraint{\emph{constraint}\xspace}
 \newcommand\constraints{\emph{constraints}\xspace}
+\newcommand\Variable{\emph{Variable}\xspace}
+\newcommand\Variables{\emph{Variables}\xspace}
+\newcommand\Widget{\emph{Widget}\xspace}
+\newcommand\Widgets{\emph{Widgets}\xspace}
+\newcommand\Constraint{\emph{Constraint}\xspace}
+\newcommand\Constraints{\emph{Constraints}\xspace}
 
 \section{Contribution}
 
@@ -12,13 +18,18 @@ this article, we will denote the set of instances by $\Omega$ and the
 set of positive instances by $Y$. See the appendix for further
 reminder on the complexity theory.
 
+I did not manage to prove that the NST problem is NP complete. We will
+also present in this section the different attempts we made and the
+reasons why they were relevant but not conclusive. 
+
 \subsection{Belonging to the NP class}
 
-We aim to prove that the NST decision problem is NP-complete. It
+We aim to prove that the NST decision problem is NP-complete, this
+means it would belong to the NP class and be NP-hard. It
 clearly belongs to the NP class. Indeed, for all tree $T = (V,E)$, for
 all integer $k$, given a potential solution $S$, it is possible to
 ascertain whether or not $S$ is self-nested, and to compute the
-distance between $S$ and $T$ also in polynomial time.
+distance between $S$ and $T$, both in polynomial time.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent\hrulefill
@@ -27,13 +38,12 @@ distance between $S$ and $T$ also in polynomial time.
 To help us build the reduction, a few conceptual remarks can be made,
 in order to guide the research. First of all, the reduction has no
 obligation to be surjective; as a matter of fact, it is quite often
-not surjective. The image of the reduction has to be small enough to
-know the general form of the solution of each instance in order to be
-able to prove the equivalence
-$\omega_{A} \in Y_{A} \Leftrightarrow \omega_{b} = f(\omega_{a}) \in
+not surjective. Indeed, in order to be able to prove the equivalence
+$\omega_{A} \in Y_{A} \Leftrightarrow \omega_{B} = f(\omega_{A}) \in
 Y_{B}$
 (where $A$ is the initial NP-complete problem and $B$ is the problem
-we consider). Yet, the image of $\Omega_{A}$ by the reduction has
+we consider), the images of the reduction have often a very
+particular shape. Yet, the image of $\Omega_{A}$ by the reduction has
 to be big enough so that we are unable to find a polynomial algorithm
 solving the problem on the set of images of the reduction. Indeed,
 finding such an algorithm and a reduction would mean we would have
@@ -52,19 +62,20 @@ conditions that make the problem difficult.
 I first considered the trees of height 2. In the NEST and NeST
 algorithms, C. Godin, P. Ferraro and R. Azais consider only edit
 operations such that the height of any pre-existing node is unchanged
-(see Figure \ref{fig:edit_height}). I decided to first use these edit
-operations.
+(see Figure \ref{fig:edit_height}). For the sake of simplicity, I
+decided to first use these edit operations.
+
 \begin{figure}
   \centering
   \caption{edit operation height conservation}
   \label{fig:edit_height}
 \end{figure}
 
-\subsubsection{Trees of height 2 with same height} 
+\subsubsection{Trees of height 2 with height conservation} 
 Let $T$ be a tree of height 2 (see Figure \ref{fig:height2}). Let us
 denote $NST(T)$ by $S$ and an optimal edit mapping between $T$ and $S$
 by $\Phi$. We will show in this section that it is possible to find
-$\Phi$ in polynomial time.  
+$\Phi$ and $S$ in polynomial time.  
 
 We can first notice that if there are any leaves of depth 1, they do
 not require any edit operations to obtain $NST(T)$. We can for this
@@ -81,12 +92,12 @@ reason assume that every node of depth 1 is of height 1 (see Figure
 
 Let us denote the nodes of height 1 of $T$ by
 $(u_{i})_{1 \leqslant i \leqslant N}$ and
-$(n_{i})_{1 \leqslant i \leqslant N}$ their resective number of
+$(n_{i})_{1 \leqslant i \leqslant N}$ their respective number of
 children. We will suppose that the sequence
 $(n_{i})_{1 \leqslant i \leqslant N}$ is sorted by ascending
 order. Each $u_{i}$ can be either deleted or mapped on a node of
-height 1 of $S$, and since $S$ is self-nested, all the nodes of height
-1 in $S$ are isomorphic to one another. The complete subtree under the
+height 1 in $S$, and since $S$ is self-nested, all the nodes of height
+1 in $S$ are isomorphic to one another. The complete subtree under
 each node of height 1 of $S$ is characterized by its number of
 leaves. As a result, the edit mapping leading from $T$ to $S$ is
 characterized by the $I_{0}$ the set of indices of the nodes deleted
@@ -94,8 +105,8 @@ and by $\tilde{n}$ the number of leaves under a node of height 1 in
 $S$. Thus, we will try to find $I_{0}$ and $\tilde{n}$ such that the
 corresponding self nested tree is a minimal distance from $T$.
 
-To delete $u_{i}$ one of the nodes of height 1 in $T$, in order to
-respect the constraint of Zhang, we have to delete first all of his
+Because of the constraint of Zhang, before deleting one of the nodes
+$u_{i}$ of height 1 in $T$, it is necessary to delete all of his
 children except one. Therefore, deleting $u_{i}$ costs $n_{i}$ where
 $n_{i}$ is the number of children of $u_{i}$.
 
@@ -120,22 +131,23 @@ indices $i$ such that $\Phi(u_{i})$ is of height 1.
   \label{fig:optimalcost}
 \end{figure}
 
-By summing the functions on every $u_{i}$, we obtain $f$ the minimal
-cost of a mapping leading from $T$ to a self nested tree of height 2,
-with $N$ nodes of depth 1, in function of $\tilde{n}$ the number of
-children of the nodes of height 1. We can observe that the resulting
-function is a piecewise linear function and that every break in its
-differentiability has for abscissa one of the $n_{i}$ or
+By summing the functions $f_{i}$ on every $u_{i}$, we obtain $f$ the
+minimal cost of a mapping leading from $T$ to a self nested tree of
+height 2, with $N$ nodes of depth 1, in function of $\tilde{n}$ the
+number of children of the nodes of height 1. We can observe that the
+resulting function is a piecewise linear function and that every break
+in its differentiability has for abscissa one of the $n_{i}$ or
 $2*n_{i}$. Therefore, the minimum of this function is reached in one
-of those points. Since every $f_{i}$ is increasing just before $2*n_{i}$ and
-constant after and that the derivative of the other $f_{j}$ are equal
-before and after $2*n_{i}$, $2*n_{i}$ cannot be a minimum of $f$.
+of those points. Since every $f_{i}$ is increasing just before
+$2*n_{i}$ and constant after and that the derivative of the other
+$f_{j}$ are equal before and after $2*n_{i}$, $2*n_{i}$ cannot be a
+minimum of $f$.
 
 Thus, by evaluating $f$ on every $n_{i}$, it is possible to find the
 minimum of $f$ and thereby find the NST of $T$.
 
 It is possible to show that every $f(n_{i})$ can be computed in
-constant time by using the value of $f(n_{i-1})$ and $f(n_{1})$ can be
+constant time by using the value of $f(n_{i-1})$. $f(n_{1})$ can be
 computed in linear time. For this reason, $NST(T)$ can be computed in
 $O(N*log(N))$ (it is necessary to order the
 $(n_{i})_{1 \leqslant i \leqslant N}$ by ascending order) where $N$ is
@@ -165,10 +177,12 @@ We can make two more remarks that will help us later.
   appendix for further details.
 \end{remark}
 
-We will keep in mind that the solution here that we proposed is a
+We will keep in mind that the solution that we proposed here is a
 brute-force search, we didn't manage to find any strategy that would
 help us understand why computing the NST of a tree of height 2 seems
-to be easier than in the general case.
+to be easier than in the general case. The main reason that explains
+why this special case is easy to solve is that the trees of height 2
+are simple enough to have a NST described by only 2 parameters.
 
 \subsubsection{Trees of height 2 without preserving the height of the
   nodes}
@@ -192,11 +206,15 @@ $\llbracket 1;N \rrbracket$ such that $\Phi(u_{i})$ is of height
 $k$. Let us denote by $\tilde{n}^{k}$ the number of children of the
 nodes of height $k$ in $S$.
 
-It is possible to show that $S$ has the shape depicted
-Figure \ref{fig:shape_NST_2}%inserer figure
-and $S$ is characterized by $(I_{k})_{0 \leqslant k \leqslant H-1}$
-and $(\tilde{n}^{k})_{1 \leqslant k \leqslant H-1}$ where $H$ is the
-height of $S$.
+It is possible to show that $S$ has the shape depicted Figure
+\ref{fig:shape_NST_2} %inserer figure
+and that $S$ is characterized by
+$(I_{k})_{0 \leqslant k \leqslant H-1}$ and
+$(\tilde{n}^{k})_{1 \leqslant k \leqslant H-1}$ where $H$ is the
+height of $S$. Therefore, the goal is to find the families
+$(I_{k})_{0 \leqslant k \leqslant H-1}$ and
+$(\tilde{n}^{k})_{1 \leqslant k \leqslant H-1}$ suh that the
+corresponding self nested trees is at minimal distance from $T$.
 \begin{figure}
   \centering
   
@@ -221,9 +239,9 @@ The remarks of the previous section can be adapted.
    \sum_{i \in I_{k}} |n_{i} - \tilde{n}^{k}| + \tilde{n}^{k}\sum_{l =
      k+1}^{H}(|I_{l}|) \right)$$
  \begin{proof}
-   Let $i \in I_{0}$, $u_{i}$ is deleted, which costs $n_{i}$ (as
+   Let $i \in I_{0}$. $u_{i}$ is deleted, which costs $n_{i}$ (as
    explained in the previous section).\\
-   Let $i \in I_{k}$ with $k \geqslant 1$, $\Phi(u_{i})$ is of height
+   Let $i \in I_{k}$ with $k \geqslant 1$. $\Phi(u_{i})$ is of height
    $k$. To obtain the complete subtree under $\Phi(u_{i})$ in $S$ from
    the subtree under $u_{i}$ in $T$, it is necessary to adjust the
    number of children of $u_{i}$ to $\tilde{n}^{k}$ which costs
@@ -292,20 +310,39 @@ log_{2}(N)+1$, the number of partitions that have to be considered is
 in the range of $N^{log_{2}(N)}$, which is unfortunetely not
 polynomial.
 
-I was not able to find any better compexity than this one. 
+I was not able to find any better compexity than this one, yet a few
+remarks can be made. First of all, the complexity is expressed in
+function of $N$ the number of nodes of height 1 and not in function of
+the size of the tree and in practice, the trees that have a NST of
+height close to the boundary $log_{2}(n)$ are very big in comparison
+of $N$. Secondly, the proofs are far more complicated when all the
+edit operations are considered than when only the height conserving
+operations are authorized. In the following, we will also prefer to
+use the restricted operations whenever it is possible.
+
+This approach is not very conclusive, indeed, the fact that the
+algorithms presented are based on a brute force search, makes it
+difficult to spot the exact difficulty in the NST problem, apart from
+the tremendous number of parameters that describe the NST of a tree.
 
 \subsection{Second approach}
-We can see some general patterns (such as the ideas of \variables, \widgets and
-\constraints) in many differents proofs of NP-completeness. Since the
-first approach was not conclusive, I tried to adapt those ideas to the
-NST problem. In this section we will present these concepts through
-two different reductions and present a family of trees that
-illustrates the concepts of \variables and \widgets in the NST problem.
+
+We will present in this section a different approach of the problem,
+by studying analogies of the NST problem with NP complete problem and
+by pointing out similarities between the proofs of NP completeness of
+the state of the art. It appears that many diffrent proofs of NP
+completeness rely on the same general patterns (such as the ideas of
+\variables, \widgets and \constraints). Since the first approach was
+not conclusive, we tried to adapt those ideas to the NST problem. In
+this section we will present these concepts through two different
+reductions and present a family of trees that illustrates the concepts
+of \variables and \widgets in the NST problem.
 
 Let us begin with the proof of the reduction from 3-SAT to INDEP-SET
-\cite{polytech}. As a brief reminder:
+(presented in \cite{polytech} for example). As a brief reminder:
 
 \begin{definition}[3-SAT]
+\ \\
 \textsc{Input:} $\Phi$ a formula in conjonctive normal form where each
 clause is composed of three litterals. \\
 \textsc{Output:} Yes if and only if there exists an interpretation
@@ -313,6 +350,7 @@ that satifies $\Phi$.\\
 \end{definition}
 
 \begin{definition}[INDEP-SET] 
+\ \\
 \textsc{Input:} $G=(V,E)$ an undirected graph and $k$ an integer.\\
 \textsc{Output:} Yes if and only if there exists a set of vertices
 $V' \subset V$ of size $k$ such that for every pair of vertices
@@ -406,10 +444,14 @@ likewise be seen as \constraints.
 
 In both cases, several remarks can be made: first of all, without the
 \constraints, the \widgets are totally independant: the value taken by
-one of them has no influence on any of the values taken by the
-others. Secondly, the \constraints highly reflects the shape of
-the instance of the first problem. Finally, the \widget used in the
-reduction is specific to the second problem.
+te \variable corresponding one of them has no influence on any of the
+values taken by the others. Secondly, the \widget used in the
+reduction is specific to the second problem. Indeed, it is quite easy
+to reduce several different NP complete to a problem $A$ by using the
+same \widgets and link them differently. Finally, the \constraints
+highly reflects the shape of the instance of the first problem and is
+a sort of translation of the difficulty of the instance of the first
+problem into the difficulties of the second problem.
 
 I choose to start the reduction from the INDEP-SET problem because
 of its simplicity and of the clarity of its \constraints and
@@ -420,7 +462,7 @@ if there is an edge between the vertices $x$ and $y$, the
 corresponding \variables cannot take both the value 1; the second one is
 that only $k$ variables can take the value 1.
 
-I decided to find pieces of trees that could be easily combined
+The aim is to find pieces of trees that could be easily combined
 together and that could be the \widgets of the reduction we are trying
 to find. These \widgets have to be used in only two possible ways, in
 order to act as the \variables of the INDEP-SET problem. In our case,
@@ -428,7 +470,7 @@ this means that there are two and only two different self-nested trees
 at equal and minimal distance from the \widget. The \widgets also have
 to be easily combined and in a way that the choice of use of each
 \widget is indepedent from the way we use the others (we have seen
-that without the \constraints, the \widgets are totally independent). 
+that without the \constraints, the \widgets are totally independent).
 
 In order to be independant, the \widgets have to be placed at
 different heights: indeed, if two \widgets are at the same height,
@@ -552,31 +594,30 @@ $u$ and $v$, we have to modify $T_{n}$ to obtain $T$ such that $T$ is
 closer to all the self nested trees of $\mathcal{S}_{n}$ where at
 least one of the \widgets corresponding to $u$ and $v$ was modified
 into Figure \ref{fig:DAGwidget2}, than the rest of
-$\mathcal{S}_{n}$. The goal is to add successively this modifications
-for every edge in $E$, and to reduce at every step the distance to the
-self nested trees of $\mathcal{S}_{\mathcal{I}}$. By doing this
-modifications for every edge in $E$, we should have applied all the
-\constraints of the first type of the INDEP-SET problem and we would
-still have to find how to translate the second one (the fact that only
-$k$ \variables can take the value 1).
+$\mathcal{S}_{n}$. By doing this modifications the NST of $T$ will be
+the trees that correspond to a valid assignment of \variables.
 
-% At the end, the closest trees
-% to $T$ will be the trees of
-% $\mathcal{S}_{\mathcal{I}}$. %shema explicatif
+The goal is to add successively this modifications for every edge in
+$E$, and to reduce at every step the distance to the self nested trees
+of $\mathcal{S}_{\mathcal{I}}$. By doing this modifications for every
+edge in $E$, we should have applied all the \constraints of the first
+type of the INDEP-SET problem and we would still have to find how to
+translate the second one (the fact that only $k$ \variables can take
+the value 1).
 
 It appears that the modification for one edge has to reduce equally
-the distance to all the trees of
-$\mathcal{S}_{\mathcal{I}}$. Unfortunately, I was not able to find
-such modification.
-% It appears that if the modification for one edge does not equally
-% reduce the distance to all the trees of $\mathcal{S}_{\mathcal{I}}$,
-% it will be far more complicated to prove the other direction of the
-% equivalence. %
+the distance to all the trees of $\mathcal{S}_{\mathcal{I}}$, so that
+the set of nearest self nested trees of $T$ is exactly
+$\mathcal{S}_{\mathcal{I}}$. Otherwise, it is not possible to prove
+the implication
+$\omega_{\textsc{ NST }} = f(\omega_{\textsc{ Indep-Set }}) \in
+Y_{\textsc{ NST }} \Rightarrow \omega_{\textsc{ Indep-Set }} \in
+Y_{\textsc{ Indep-Set }}$
 
-% L'idée est alors de modifier légerement $T_{n}$, en fonction de
-% l'instance de départ afin de l'approcher davantage des arbres
-% representant une solution valide, ainsi que de ceux dont moins de $n$
-% variables ont été mis à une valeur positive. 
+Unfortunately, the only modifications we found did not respect this
+property. For this reason, we were not able to finish the proof with
+this method.
+ 
 \subsection{Last approach}
 
 Since the second approch was not conclusive, I tried to approach the
@@ -584,9 +625,158 @@ problem form the other side: instead of trying to find the \widgets,
 we will this time search to adapt the concept of \constraint to the
 NST problem. 
 
-The tree Figure re
-has exactly 3 NST
+As we said before, the \constraints are generally a sort of
+translation from one problem to another of the difficulties. The issue
+is that we do not know precisely at this point where the difficulty
+truely lies in the NST problem. 
 
+The algorithms proposed by C. Godin, P. Ferraro and R. Azais
+\cite{godin, romain} to compute the NEST and the NeST rely on the fact
+that since only addition or deletion operation are made, it is
+possible to operate recursively on the DAG. More precisely, both
+algorithm start by doing operations on the nodes of low height, in
+order to make them all self-nested and isomorphic to one another,
+recuresively use the changed nodes of low height to make the ones of
+higher height alos isomorphic and self-nested. This method is possible
+because only one type of operations is allowed.
+
+Let illustrate on an example why this method does not seem to be
+possible in the case of the NST problem. Let us consider the tree
+Figure \ref{fig:treeexample}. Its NEST is shown Figure
+\ref{fig:NESTexample}, its NeST is shown Figure \ref{fig:NeSTexample}.
+Its NST is also its NEST. So far it does not seem particularly
+difficult, the issue is that in tree Figure
+\ref{fig:extendedexample} has for NST the tree
+\ref{fig:extendedexampleNST}, where the subtrees of height 2 are
+isomorphic to the tree Figure \ref{fig:NeSTexample} which is not the
+NST of the subtrees of heigth 2 (isomorphic to \ref{fig:treeexample}).
+
+The previous example highlights a sort of balance between two
+irreconcilable goals: to be close to the initial tree $T$, the
+subtrees of small height in the NST $S$ have to be close to the trees
+of small height of $T$. But to make the higher nodes self-nested and
+isomorphic to one anoher, it will sometimes be necessary to add whole
+subtrees of smaller height. And therefore, the subtrees of small
+height in $S$ also have to be of small size. This prevents us from
+using a recursion from the bottom of the DAG to the top or in the
+other direction. It prevents us from knowing where to start doing the
+modifications: if we start with the upper part of the DAG, we will
+need to know the exact size of the smaller subtrees to be able to
+choose properly which operations have to be done; if we start with the
+lower part of the DAG, we will have to know how many times the small
+subtrees will be completely added in order to choose a self-nested
+tree of small size yet close to the initial subtrees of small height.
+
+The tree Figure \ref{fig:constraint} (that has the DAg compression shown
+Figure \ref{fig:DAGconstraint}) is simple tree that depicts perfectly
+this balance: the lower rhombus in the DAG needs to be modified in
+odrer to become self-netsed, as well as the upper rhombus, but the
+modifications made on any of them impacts the cost of the modifcation
+made on the other one. 
+
+This tree is at distance 12 from the self nested trees represented by
+their DAG Figures \ref{fig:NST22}, \ref{fig:NST23} and \ref{fig:NST32}
+and at distance 14 from the self nested tree Figure
+\ref{fig:NST33}. The 3 first trees are the NST of the tree Figure
+\ref{fig:constraint}. It is quite easy to see the two rhombus as
+\widgets and assimilate them to \variables, that can take the values 2
+or 3, depending on which one of the 4 self nested tree we consider.
+
+
+\begin{figure}
+ \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    %\includegraphics[width=.5\textwidth]{figures/dag_brick.pdf}
+    \caption{fig:constraint}
+    \label{fig:constraint}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    %\includegraphics[width=.5\textwidth]{figures/dagNST.pdf}
+    \caption{fig:DAGconstraint}
+    \label{fig:DAGconstraint}
+  \end{subfigure} 
+  \caption{}%\label{}
+\end{figure}
+
+\begin{figure}
+ \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    %\includegraphics[width=\textwidth]{figures/dag_brick.pdf}
+    \caption{fig:NST22}
+    \label{fig:NST22}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    %\includegraphics[width=\textwidth]{figures/dagNST.pdf}
+    \caption{fig:NST23}
+    \label{fig:NST23}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    %\includegraphics[width=\textwidth]{figures/dag_brick.pdf}
+    \caption{fig:NST32}
+    \label{fig:NST32}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.22\textwidth}
+    \centering
+    %\includegraphics[width=\textwidth]{figures/dagNST.pdf}
+    \caption{fig:NST33}
+    \label{fig:NST33}
+  \end{subfigure} 
+  \caption{4 possibilites of variations}%\label{fig:example}
+\end{figure}
+
+The equal distance to the 3 first self nested tree is particularly
+interessant because it is very similar to the \constraint of the
+INDEP-SET problem (Figure \ref{tab:constraint})! As a short reminder,
+the first type of \constraint for the INDEP-SET problem is that if two
+vertices $u$ and $v$ are linked by an edge in $G$, the corresponding
+\variables cannot be both set to 1.
+
+We can see Figure \ref{tab:constraint} that the assignment of
+\variables that corresponds to a valid independent set for the INDEP-SET
+problem, are exactly the assignments of \variables that correspond to
+the NST of the tree Figure \ref{fig:constraint}
+
+\begin{figure}[h]
+ \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \begin{tabular}{|c|c|c|}
+      \hline 
+      $u$ & $v$ & \constraint \\
+      \hline
+      0 & 0 & respected \\
+      0 & 1 & respected \\
+      1 & 0 & respected \\
+      1 & 1 & violated \\
+      \hline
+    \end{tabular}
+    \caption{\Constraint of INDEP-SET}
+    \label{tab:constIND}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.45\textwidth}
+    \centering
+    \begin{tabular}{|c|c|c|c|}
+      \hline 
+      $u$ & $v$ & distance & \constraint\\
+      \hline
+      2 & 2 & 12 & respected \\
+      2 & 3 & 12 & respected \\
+      3 & 2 & 12 & respected \\
+      3 & 3 & 14 & violated \\
+      \hline
+    \end{tabular}
+    \caption{\Constraint of NST}
+    \label{tab:constNST}
+  \end{subfigure} 
+  \caption{Constraints}\label{tab:constraint}
+\end{figure}
 
 % \subsection{Intuition guiding the researches}
 
